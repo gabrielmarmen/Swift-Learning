@@ -8,8 +8,11 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var count = 0
+    @State private var checkAmount = 0.0
     @State private var name = ""
+    @State private var numberOfPeople = 2
+    
+
     
     var body: some View {
 
@@ -17,24 +20,22 @@ struct ContentView: View {
         {
             Form{
                 Section{
-                    Text("Hello, word!")
+                    TextField("Amount", value: $checkAmount, format: .currency(code: Locale.current.currencyCode ?? "USD"))
+                        .keyboardType(.decimalPad)
+                    Picker("Number of people", selection: $numberOfPeople) {
+                        ForEach(2..<99){ index in
+                            Text("\(index) people").tag(index)
+                        }
+                    }
                     
                 }
                 Section{
-                    Button("Up Up Up"){
-                        count += 1
-                    }
-                    Text("Count is : \(count)")
+                    Text(checkAmount, format: .currency(code: Locale.current.currencyCode ?? "USD"))
+                    
                 }
-                
-                Section{
-                    Text("Your name is \(name)")
-                    TextField("Enter Your Name", text: $name)
-                }
-                
-                
+
             }
-            .navigationTitle("Sheesh")
+            .navigationTitle("WeSplit")
             
         }
         
