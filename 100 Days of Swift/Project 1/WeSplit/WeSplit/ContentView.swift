@@ -8,20 +8,37 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var count = 0
+    @State private var name = ""
+    
     var body: some View {
-        Form{
-            Section{
-                Text("Hello, word!")
-                Text("Hello, word!")
-                Text("Hello, word!")
+
+        NavigationView
+        {
+            Form{
+                Section{
+                    Text("Hello, word!")
+                    
+                }
+                Section{
+                    Button("Up Up Up"){
+                        count += 1
+                    }
+                    Text("Count is : \(count)")
+                }
+                
+                Section{
+                    Text("Your name is \(name)")
+                    TextField("Enter Your Name", text: $name)
+                }
+                
+                
             }
-            
-            Section{
-                Text("Hello, word!")
-            }
-            
+            .navigationTitle("Sheesh")
             
         }
+        
+        
 
     }
 }
