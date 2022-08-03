@@ -11,6 +11,13 @@ struct ContentView: View {
     @State private var checkAmount = 0.0
     @State private var name = ""
     @State private var numberOfPeople = 2
+    @State private var tipPercentage = 0.20
+    @FocusState private var amountIsFocused: Bool
+
+    private let tipPercentages = [0.05,0.10,0.15,0.20,0]
+    private var SplitAmount: Double{
+        (checkAmount * tipPercentage + checkAmount) / Double(numberOfPeople)
+    }
     
 
     
@@ -22,20 +29,49 @@ struct ContentView: View {
                 Section{
                     TextField("Amount", value: $checkAmount, format: .currency(code: Locale.current.currencyCode ?? "USD"))
                         .keyboardType(.decimalPad)
+                        .focused($amountIsFocused)
                     Picker("Number of people", selection: $numberOfPeople) {
-                        ForEach(2..<99){ index in
-                            Text("\(index) people").tag(index)
+                        ForEach(2..<99, id: \.self){
+                            Text("\($0) people")
                         }
                     }
+                    .onChange(of: numberOfPeople, perform: { (value) in
+                                                amountIsFocused = false
+                                            })
                     
                 }
+                
                 Section{
-                    Text(checkAmount, format: .currency(code: Locale.current.currencyCode ?? "USD"))
-                    
+                    Picker("Tip Percentage", selection: $tipPercentage) {
+                        ForEach(tipPercentages, id: \.self){
+                            Text($0, format: .percent)
+                        }
+                    }
+                    .pickerStyle(.segmented)
+                    .onChange(of: tipPercentage, perform: { (value) in
+                                                amountIsFocused = false
+                                            })
+                } header: {
+                    Text("How much tip do you want to leave?")
+                }
+                
+                
+                Section{
+                    Text(SplitAmount, format: .currency(code: Locale.current.currencyCode ?? "USD"))
+                } header: {
+                    Text("Amount per person")
                 }
 
             }
             .navigationTitle("WeSplit")
+            .toolbar {
+                ToolbarItemGroup(placement: .keyboard) {
+                    Spacer()
+                    Button("Done") {
+                        amountIsFocused = false
+                    }
+                }
+            }
             
         }
         
