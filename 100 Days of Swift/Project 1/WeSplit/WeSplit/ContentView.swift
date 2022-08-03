@@ -18,6 +18,9 @@ struct ContentView: View {
     private var SplitAmount: Double{
         (checkAmount * tipPercentage + checkAmount) / Double(numberOfPeople)
     }
+    private var totalCheckAmount: Double{
+        checkAmount * tipPercentage + checkAmount
+    }
     
 
     
@@ -43,11 +46,10 @@ struct ContentView: View {
                 
                 Section{
                     Picker("Tip Percentage", selection: $tipPercentage) {
-                        ForEach(tipPercentages, id: \.self){
-                            Text($0, format: .percent)
+                        ForEach(1..<100){
+                            Text(Double($0)/100, format: .percent).tag(Double($0)/100)
                         }
                     }
-                    .pickerStyle(.segmented)
                     .onChange(of: tipPercentage, perform: { (value) in
                                                 amountIsFocused = false
                                             })
@@ -60,6 +62,12 @@ struct ContentView: View {
                     Text(SplitAmount, format: .currency(code: Locale.current.currencyCode ?? "USD"))
                 } header: {
                     Text("Amount per person")
+                }
+                
+                Section{
+                    Text(totalCheckAmount, format: .currency(code: Locale.current.currencyCode ?? "USD"))
+                } header: {
+                    Text("Total Check Amount")
                 }
 
             }
