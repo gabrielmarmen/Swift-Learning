@@ -23,8 +23,6 @@ struct ContentView: View {
         return String((round(measurementInput.converted(to: selectedOutputMeasurement).value * 100)/100).formatted()) + " " + selectedOutputMeasurement.symbol
     }
     
-    
-    
     private let measurementUnits: [UnitLength] = [UnitLength.kilometers, UnitLength.miles, UnitLength.feet, UnitLength.centimeters]
 
     var body: some View {
