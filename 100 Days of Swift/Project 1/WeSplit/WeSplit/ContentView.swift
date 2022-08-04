@@ -46,16 +46,23 @@ struct ContentView: View {
                 
                 Section{
                     Picker("Tip Percentage", selection: $tipPercentage) {
-                        ForEach(1..<100){
-                            Text(Double($0)/100, format: .percent).tag(Double($0)/100)
+                        ForEach(tipPercentages, id: \.self){
+                            Text($0, format: .percent)
                         }
                     }
+                    .pickerStyle(.segmented)
+                    //Picker("Tip Percentage", selection: $tipPercentage) {
+                    //    ForEach(1..<100){
+                    //        Text(Double($0)/100, format: .percent).tag(Double($0)/100)
+                    //    }
+                    //}
                     .onChange(of: tipPercentage, perform: { (value) in
                                                 amountIsFocused = false
                                             })
                 } header: {
                     Text("How much tip do you want to leave?")
                 }
+                
                 
                 
                 Section{
