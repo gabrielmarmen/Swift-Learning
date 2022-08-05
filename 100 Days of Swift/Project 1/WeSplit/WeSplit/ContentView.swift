@@ -21,7 +21,9 @@ struct ContentView: View {
     private var totalCheckAmount: Double{
         checkAmount * tipPercentage + checkAmount
     }
-    
+    private var zeroTip: Bool {
+        tipPercentage > 0 ? false : true
+    }
 
     
     var body: some View {
@@ -73,6 +75,7 @@ struct ContentView: View {
                 
                 Section{
                     Text(totalCheckAmount, format: .currency(code: Locale.current.currencyCode ?? "USD"))
+                        .foregroundColor(zeroTip ? .red : .black )
                 } header: {
                     Text("Total Check Amount")
                 }
