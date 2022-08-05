@@ -16,10 +16,9 @@ struct ContentView: View {
     @State private var score = 0
     @State private var questionNo = 1
     @State private var message = ""
+    
+    
 
-    
-    
-    
     var body: some View {
         
         ZStack{
@@ -38,10 +37,7 @@ struct ContentView: View {
                     Button{
                         flagTapped(number)
                     } label: {
-                        Image(countries[number])
-                            .renderingMode(.original)
-                            .clipShape(RoundedRectangle(cornerSize: .init(width: 7, height: 7)))
-                            .shadow(radius: 5)
+                        FlagView(of: countries[number])
                     }
                 }
                 Text("Score : " + String(score))
@@ -92,9 +88,44 @@ struct ContentView: View {
         }
         questionNo += 1
     }
+    
+    func FlagImage(of path: String) -> some View{
+        Image(path)
+            .renderingMode(.original)
+            .clipShape(RoundedRectangle(cornerSize: .init(width: 7, height: 7)))
+            .shadow(radius: 5)
+    }
 }
 
+struct FlagView: View{
+    let of: String
+    
+    var body: some View{
+        Image(of)
+            .renderingMode(.original)
+            .clipShape(RoundedRectangle(cornerSize: .init(width: 7, height: 7)))
+            .shadow(radius: 5)
+    }
+}
 
+struct Title: ViewModifier{
+    
+    func body(content: Content) -> some View {
+        content
+            .font(.largeTitle)
+            .foregroundColor(.white)
+            .padding()
+            .background(.blue)
+            .clipShape(RoundedRectangle(cornerRadius: 10))
+        
+    }
+}
+
+extension View {
+    func title() -> some View{
+        modifier(Title())
+    }
+}
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
