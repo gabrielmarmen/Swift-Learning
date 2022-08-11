@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		603ABF6028A4A3B300FB97AD /* start.txt in Resources */ = {isa = PBXBuildFile; fileRef = 603ABF5F28A4A3B300FB97AD /* start.txt */; };
+		603ABF6128A4A3B300FB97AD /* start.txt in Resources */ = {isa = PBXBuildFile; fileRef = 603ABF5F28A4A3B300FB97AD /* start.txt */; };
 		604F1D7728A354EB00934D75 /* Project_5App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604F1D6728A354E900934D75 /* Project_5App.swift */; };
 		604F1D7828A354EB00934D75 /* Project_5App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604F1D6728A354E900934D75 /* Project_5App.swift */; };
 		604F1D7928A354EB00934D75 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604F1D6828A354E900934D75 /* ContentView.swift */; };
@@ -16,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		603ABF5F28A4A3B300FB97AD /* start.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = start.txt; sourceTree = "<group>"; };
 		604F1D6728A354E900934D75 /* Project_5App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project_5App.swift; sourceTree = "<group>"; };
 		604F1D6828A354E900934D75 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		604F1D6928A354EB00934D75 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -56,6 +59,7 @@
 			children = (
 				604F1D6728A354E900934D75 /* Project_5App.swift */,
 				604F1D6828A354E900934D75 /* ContentView.swift */,
+				603ABF5F28A4A3B300FB97AD /* start.txt */,
 				604F1D6928A354EB00934D75 /* Assets.xcassets */,
 			);
 			path = Shared;
@@ -158,6 +162,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				604F1D7B28A354EB00934D75 /* Assets.xcassets in Resources */,
+				603ABF6028A4A3B300FB97AD /* start.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -166,6 +171,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				604F1D7C28A354EB00934D75 /* Assets.xcassets in Resources */,
+				603ABF6128A4A3B300FB97AD /* start.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
