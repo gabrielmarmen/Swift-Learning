@@ -35,48 +35,59 @@ struct ContentView: View {
     var body: some View {
         NavigationView{
             List{
-                if personalItems.count != 0{
                     Section{
-                        ForEach(personalItems){ item in
-                            
-                            HStack {
-                                VStack(alignment: .leading) {
-                                    Text(item.name)
-                                        .font(.headline)
-                                    Text(item.type)
-                                }
+                        if personalItems.count != 0{
+                            ForEach(personalItems){ item in
                                 
-                                Spacer()
-                                Text(item.amount, format: .currency(code: Locale.current.currencyCode ?? "USD"))
-                                    .foregroundColor(getAmountColor(for: item))
+                                HStack {
+                                    VStack(alignment: .leading) {
+                                        Text(item.name)
+                                            .font(.headline)
+                                        Text(item.type)
+                                    }
+                                    
+                                    Spacer()
+                                    Text(item.amount, format: .currency(code: Locale.current.currencyCode ?? "USD"))
+                                        .foregroundColor(getAmountColor(for: item))
+                                }
                             }
+                            .onDelete(perform: removePersonalItems)
                         }
-                        .onDelete(perform: removePersonalItems)
+                        else{
+                            Text("No personal expenses yet")
+                                .foregroundColor(.secondary)
+                        }
                     } header: {
                         Text("Personal expenses")
                     }
-                }
-                if businessItems.count != 0 {
+                
+                
                     Section{
-                        ForEach(businessItems){ item in
-                            
-                            HStack {
-                                VStack(alignment: .leading) {
-                                    Text(item.name)
-                                        .font(.headline)
-                                    Text(item.type)
-                                }
+                        if businessItems.count != 0 {
+                            ForEach(businessItems){ item in
                                 
-                                Spacer()
-                                Text(item.amount, format: .currency(code: Locale.current.currencyCode ?? "USD"))
-                                    .foregroundColor(getAmountColor(for: item))
+                                HStack {
+                                    VStack(alignment: .leading) {
+                                        Text(item.name)
+                                            .font(.headline)
+                                        Text(item.type)
+                                    }
+                                    
+                                    Spacer()
+                                    Text(item.amount, format: .currency(code: Locale.current.currencyCode ?? "USD"))
+                                        .foregroundColor(getAmountColor(for: item))
+                                }
                             }
+                            .onDelete(perform: removeBusinessItems)
                         }
-                        .onDelete(perform: removeBusinessItems)
+                        else{
+                            Text("No business expenses yet")
+                                .foregroundColor(.secondary)
+                        }
                     } header: {
                         Text("business expenses")
                     }
-                }
+                
                 
                 
                 
