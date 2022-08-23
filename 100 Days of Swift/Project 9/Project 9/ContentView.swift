@@ -50,7 +50,7 @@ struct ContentView: View {
                 .padding(30)
             
             Button("Random Thickness") {
-                withAnimation(.easeIn){
+                withAnimation(.interactiveSpring()){
                     arrowThickness = Double.random(in: 4..<30)
                 }
                 
