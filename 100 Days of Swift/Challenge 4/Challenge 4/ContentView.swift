@@ -8,23 +8,48 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @State private var addIsPresented = false
+    
+    @StateObject private var activities = Activities()
+    
+    
     var body: some View {
         NavigationView{
-            LazyVStack{
-                
-            }
-            .navigationTitle("Habits")
+                List{
+                    ForEach(activities.items, id: \.self.id) { activity in
+                        NavigationLink(activity.title){
+                            Text("SHEESH")
+                        }
+                        .padding()
+                    }
+                    .onDelete(perform: deleteItem)
+                }
+                .navigationTitle("Habits")
+                .toolbar{
+                    Button(){
+                        addIsPresented.toggle()
+                    }label: {
+                        Image(systemName: "plus")
+                    }
+                    
+                }
+                .listStyle(.grouped)
         }
+        .sheet(isPresented: $addIsPresented) {
+            AddItemSheet(activities: activities)
+        }
+    }
+    
+    func deleteItem(at offsets: IndexSet){
+        let tempItem = activities.items[offsets.first ?? 0]
+        activities.items.removeAll(where: {$0.id == tempItem.id})
     }
 }
 
-struct HabitItem : View {
-    
-    var body: some View{
-        se
-        
-    }
-}
+
+
+
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
