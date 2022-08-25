@@ -17,9 +17,9 @@ struct ContentView: View {
     var body: some View {
         NavigationView{
                 List{
-                    ForEach(activities.items, id: \.self.id) { activity in
+                    ForEach(activities.items) { activity in
                         NavigationLink(activity.title){
-                            Text("SHEESH")
+                            ActivityView(activities: activities, activity: activity)
                         }
                         .padding()
                     }
