@@ -17,19 +17,31 @@ struct DetailView: View {
     
     var body: some View {
         ScrollView {
+            
             ZStack(alignment: .bottomTrailing) {
                 Image(book.genre ?? "Fantasy")
                     .resizable()
                     .scaledToFit()
-
-                Text(book.genre?.uppercased() ?? "FANTASY")
-                    .font(.caption)
-                    .fontWeight(.black)
-                    .padding(8)
-                    .foregroundColor(.white)
-                    .background(.black.opacity(0.75))
-                    .clipShape(Capsule())
-                    .offset(x: -5, y: -5)
+                HStack{
+                    Text(book.date?.formatted() ?? Date.now.formatted())
+                        .font(.caption)
+                        .fontWeight(.black)
+                        .padding(8)
+                        .foregroundColor(.white)
+                        .background(.black.opacity(0.75))
+                        .clipShape(Capsule())
+                        .offset(x: 5, y: -5)
+                    Spacer()
+                    Text(book.genre?.uppercased() ?? "FANTASY")
+                        .font(.caption)
+                        .fontWeight(.black)
+                        .padding(8)
+                        .foregroundColor(.white)
+                        .background(.black.opacity(0.75))
+                        .clipShape(Capsule())
+                        .offset(x: -5, y: -5)
+                }
+                
             }
             Text(book.author ?? "Unknown author")
                 .font(.title)
