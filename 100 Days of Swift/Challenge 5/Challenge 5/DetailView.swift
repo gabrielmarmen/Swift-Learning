@@ -9,7 +9,7 @@ import SwiftUI
 
 struct DetailView: View {
     
-    @State var user: User
+    @State var user: CachedUser
     
     var body: some View {
         
@@ -20,9 +20,9 @@ struct DetailView: View {
                         .scaledToFit()
                         .frame(width: 100)
                         .shadow(radius: 5)
-                    Text(user.name)
+                    Text(user.wrappedName)
                         .font(.title)
-                    Text(user.company)
+                    Text(user.wrappedCompany)
                         .foregroundColor(Color.secondary)
                     
                     Text(String(user.age) + " years old")
@@ -30,22 +30,16 @@ struct DetailView: View {
                 }
                 
                 
-                List{
-                    ForEach(user.friends){ friend in
-                        Text(friend.name)
-                    }
+                //List{
+                //    ForEach(user.friends){ friend in
+                //        Text(friend.name)
+                //    }
                     
-                }
+               // }
             }
             
         
     }
 }
 
-struct DetailView_Previews: PreviewProvider {
-    
-    
-    static var previews: some View {
-        DetailView(user: User(id: UUID(), isActive: true, name: "Gabriel Marmen", age: 24, company: "CISSSBSL", friends: [Friend]()))
-    }
-}
+

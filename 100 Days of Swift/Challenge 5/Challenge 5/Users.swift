@@ -11,6 +11,10 @@ class Users: ObservableObject{
     
     @Published var items: [User]
     
+    var haveNoEntries: Bool {
+        items.isEmpty
+    }
+    
     init(){
         items = [User]()
     }

@@ -6,15 +6,19 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct ContentView: View {
     
+    @Environment(\.managedObjectContext) var moc
+    
     @StateObject private var users = Users()
+    @FetchRequest(sortDescriptors: []) var cachedUsers: FetchedResults<CachedUser>
     
     var body: some View {
         NavigationView{
             List{
-                ForEach(users.items){ user in
+                ForEach(cachedUsers){ user in
                     NavigationLink {
                         DetailView(user: user)
                     } label: {
@@ -22,7 +26,7 @@ struct ContentView: View {
                             Image(systemName: "person.fill")
                                 .foregroundColor(Color.gray)
                             VStack(alignment: .leading) {
-                                Text(user.name)
+                                Text(user.wrappedName)
                                     .font(.headline)
                                 HStack{
                                     Text("Status -")
@@ -41,31 +45,16 @@ struct ContentView: View {
             }
             .navigationTitle("FriendFace")
             .task {
-                if users.items.isEmpty {
-                        await loadData()
+                if users.haveNoEntries {
+                    await DataInitialiser.cacheData(in: moc)
                 }
             }
             .refreshable {
-                await loadData()
+                await DataInitialiser.cacheData(in: moc)
             }
         }
     }
-    func loadData() async {
-        guard let url = URL(string: "https://www.hackingwithswift.com/samples/friendface.json") else {
-            print("Invalid URL")
-            return
-        }
-        do {
-            let (data, _) = try await URLSession.shared.data(from: url)
 
-            if let decodedResponse = try? JSONDecoder().decode([User].self, from: data) {
-                users.items = decodedResponse
-            }
-        } catch {
-            print("Invalid data")
-        }
-        
-    }
     
 }
 
