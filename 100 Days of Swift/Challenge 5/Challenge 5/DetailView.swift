@@ -31,9 +31,9 @@ struct DetailView: View {
                 
                 
                 //List{
-                //    ForEach(user.friends){ friend in
-                //        Text(friend.name)
-                //    }
+                //    ForEach(user.wrappedFriends){ friend in
+                   //     Text(friend.name)
+                 //   }
                     
                // }
             }

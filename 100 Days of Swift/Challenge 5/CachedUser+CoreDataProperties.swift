@@ -2,7 +2,7 @@
 //  CachedUser+CoreDataProperties.swift
 //  Challenge 5
 //
-//  Created by Gabriel Marmen on 2022-09-02.
+//  Created by Gabriel Marmen on 2022-09-05.
 //
 //
 
@@ -21,20 +21,34 @@ extension CachedUser {
     @NSManaged public var id: UUID?
     @NSManaged public var isActive: Bool
     @NSManaged public var name: String?
-    @NSManaged public var friends: CachedFriend?
-    
+    @NSManaged public var friends: NSSet?
     
     var wrappedCompany: String {
         company ?? "Unknown"
     }
     var wrappedName: String {
-        company ?? "Unknown"
+        name ?? "Unknown"
     }
-
+    
 
 }
 
+// MARK: Generated accessors for friends
+extension CachedUser {
 
+    @objc(addFriendsObject:)
+    @NSManaged public func addToFriends(_ value: CachedFriend)
+
+    @objc(removeFriendsObject:)
+    @NSManaged public func removeFromFriends(_ value: CachedFriend)
+
+    @objc(addFriends:)
+    @NSManaged public func addToFriends(_ values: NSSet)
+
+    @objc(removeFriends:)
+    @NSManaged public func removeFromFriends(_ values: NSSet)
+
+}
 
 extension CachedUser : Identifiable {
 

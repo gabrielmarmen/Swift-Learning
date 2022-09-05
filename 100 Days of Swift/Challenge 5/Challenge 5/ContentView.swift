@@ -45,7 +45,7 @@ struct ContentView: View {
             }
             .navigationTitle("FriendFace")
             .task {
-                if users.haveNoEntries {
+                if cachedUsers.count == 0 {
                     await DataInitialiser.cacheData(in: moc)
                 }
             }

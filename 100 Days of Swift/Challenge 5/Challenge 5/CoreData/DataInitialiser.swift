@@ -30,17 +30,22 @@ struct DataInitialiser {
                     tmpUser.id = decodedResponse[i].id
                     tmpUser.isActive = decodedResponse[i].isActive
                     tmpUser.company = decodedResponse[i].company
-                    for i in 0..<decodedResponse[i].friends.count{
+                    for y in 0..<decodedResponse[i].friends.count{
                         let tmpFriend = CachedFriend(context: moc)
-                        tmpFriend.id = decodedResponse[i].id
-                        tmpFriend.name =  decodedResponse[i].name
+                        tmpFriend.id = UUID(uuidString: decodedResponse[i].friends[y].id)
+                        tmpFriend.name =  decodedResponse[i].friends[y].name
+                        tmpUser.addToFriends(tmpFriend)
                     }
-                    try? moc.save()
                 }
+                try? moc.save()
             }
         } catch {
             print("Invalid data")
         }
+    }
+    
+    static func DeleteAllRecords(in moc: NSManagedObjectContext) {
+        
     }
     
 }
