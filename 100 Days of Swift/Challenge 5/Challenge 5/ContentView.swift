@@ -18,15 +18,15 @@ struct ContentView: View {
     var body: some View {
         NavigationView{
             List{
-                ForEach(cachedUsers){ user in
+                ForEach(users.items){ user in
                     NavigationLink {
-                        DetailView(user: user)
+                        DetailView(user: user, users: users)
                     } label: {
                         HStack {
                             Image(systemName: "person.fill")
                                 .foregroundColor(Color.gray)
                             VStack(alignment: .leading) {
-                                Text(user.wrappedName)
+                                Text(user.name)
                                     .font(.headline)
                                 HStack{
                                     Text("Status -")
@@ -45,12 +45,12 @@ struct ContentView: View {
             }
             .navigationTitle("FriendFace")
             .task {
-                if cachedUsers.count == 0 {
-                    await DataInitialiser.cacheData(in: moc)
+                if users.items.count == 0 {
+                    users.items =  await DataInitialiser.GetDataFromJSON()
                 }
             }
             .refreshable {
-                await DataInitialiser.cacheData(in: moc)
+                users.items =  await DataInitialiser.GetDataFromJSON()
             }
         }
     }

@@ -19,6 +19,10 @@ class Users: ObservableObject{
         items = [User]()
     }
     
+    func getUser(from friend: Friend) -> User {
+        items.first(where: {$0.id == friend.id})!
+    }
+    
     
     
     
