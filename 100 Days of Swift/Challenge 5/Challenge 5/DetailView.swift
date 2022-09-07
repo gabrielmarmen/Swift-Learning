@@ -9,8 +9,10 @@ import SwiftUI
 
 struct DetailView: View {
     
-    @State var user: User
-    @ObservedObject var users: Users
+    @Environment(\.managedObjectContext) var moc
+    @State var user: CachedUser
+    @FetchRequest(sortDescriptors: [] ) var cachedUsers: FetchedResults<CachedUser>
+    
     
     var body: some View {
         
@@ -21,9 +23,9 @@ struct DetailView: View {
                         .scaledToFit()
                         .frame(width: 100)
                         .shadow(radius: 5)
-                    Text(user.name)
+                    Text(user.wrappedName)
                         .font(.title)
-                    Text(user.name)
+                    Text(user.wrappedCompany)
                         .foregroundColor(Color.secondary)
                     
                     Text(String(user.age) + " years old")
@@ -32,9 +34,9 @@ struct DetailView: View {
                 
                 
                 List{
-                    ForEach(user.friends){ friend in
-                        NavigationLink(friend.name){
-                            DetailView(user: users.getUser(from: friend), users: users)
+                    ForEach(user.wrappedArrayFriends){ friend in
+                        NavigationLink(friend.wrappedName){
+                            DetailView(user: GetCachedUser(from: friend))
                         }
                     }
                     
@@ -42,6 +44,11 @@ struct DetailView: View {
             }
             
         
+    }
+    
+    func GetCachedUser(from friend: CachedFriend) -> CachedUser {
+        
+        return cachedUsers.first(where: {$0.id == friend.id})!
     }
 }
 

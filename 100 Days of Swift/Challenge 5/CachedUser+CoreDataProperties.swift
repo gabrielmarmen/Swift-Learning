@@ -29,6 +29,13 @@ extension CachedUser {
     var wrappedName: String {
         name ?? "Unknown"
     }
+    var wrappedArrayFriends: [CachedFriend] {
+        let set = friends as? Set<CachedFriend> ?? []
+        
+        return set.sorted {
+            $0.wrappedName < $1.wrappedName
+        }
+    }
     
 
 }

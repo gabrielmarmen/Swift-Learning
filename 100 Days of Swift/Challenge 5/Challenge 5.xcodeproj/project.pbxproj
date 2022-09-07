@@ -83,6 +83,7 @@
 			isa = PBXGroup;
 			children = (
 				604278BC28C1B07C00962A4A /* FriendFace.xcdatamodeld */,
+				604278C728C1B28400962A4A /* DataController.swift */,
 				604278DB28C1F23D00962A4A /* DataInitialiser.swift */,
 				604278D128C1BE6A00962A4A /* CoreData Subclasses */,
 			);
@@ -117,7 +118,6 @@
 				604278B428C1959100962A4A /* User.swift */,
 				60B4F04B28C0D8BA00E51B56 /* Assets.xcassets */,
 				60B4F04D28C0D8BA00E51B56 /* Preview Content */,
-				604278C728C1B28400962A4A /* DataController.swift */,
 			);
 			path = "Challenge 5";
 			sourceTree = "<group>";

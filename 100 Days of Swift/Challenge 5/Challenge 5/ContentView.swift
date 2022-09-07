@@ -13,20 +13,20 @@ struct ContentView: View {
     @Environment(\.managedObjectContext) var moc
     
     @StateObject private var users = Users()
-    @FetchRequest(sortDescriptors: []) var cachedUsers: FetchedResults<CachedUser>
+    @FetchRequest(sortDescriptors: [SortDescriptor(\.name)]) var cachedUsers: FetchedResults<CachedUser>
     
     var body: some View {
         NavigationView{
             List{
-                ForEach(users.items){ user in
+                ForEach(cachedUsers){ user in
                     NavigationLink {
-                        DetailView(user: user, users: users)
+                        DetailView(user: user)
                     } label: {
                         HStack {
                             Image(systemName: "person.fill")
                                 .foregroundColor(Color.gray)
                             VStack(alignment: .leading) {
-                                Text(user.name)
+                                Text(user.wrappedName)
                                     .font(.headline)
                                 HStack{
                                     Text("Status -")
@@ -45,12 +45,14 @@ struct ContentView: View {
             }
             .navigationTitle("FriendFace")
             .task {
-                if users.items.count == 0 {
-                    users.items =  await DataInitialiser.GetDataFromJSON()
+                if cachedUsers.count == 0 {
+                    await DataInitialiser.FetchUsers(in: moc)
                 }
+                
             }
             .refreshable {
-                users.items =  await DataInitialiser.GetDataFromJSON()
+                
+                await DataInitialiser.FetchUsers(in: moc)
             }
         }
     }
