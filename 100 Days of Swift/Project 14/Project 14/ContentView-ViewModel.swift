@@ -19,6 +19,10 @@ extension ContentView {
         @Published var isUnlocked = false
         let savePath = FileManager.documentsDirectory.appendingPathComponent("SavedPlaces")
         
+        @Published var showingAlert = false
+        @Published var alertTitle = ""
+        @Published var alertMessage = ""
+        
         init() {
             do {
                 let data = try Data(contentsOf: savePath)
@@ -66,11 +70,19 @@ extension ContentView {
                                 self.isUnlocked = true
                             }
                     } else {
-                        // error
+                        Task { @MainActor in
+                            self.alertTitle = "Oops"
+                            self.alertMessage = authenticationError?.localizedDescription ?? "Unknown Error..."
+                            self.showingAlert = true
+                        }
                     }
                 }
             } else {
-                // no biometrics
+                Task { @MainActor in
+                    self.alertTitle = "Oops"
+                    self.alertMessage = "You don't have Biometrics"
+                    self.showingAlert = true
+                }
             }
         }
     }

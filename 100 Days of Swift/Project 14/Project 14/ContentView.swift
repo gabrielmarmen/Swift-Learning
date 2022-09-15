@@ -50,13 +50,16 @@ struct ContentView: View {
                             viewModel.addLocation()
                         } label: {
                             Image(systemName: "plus")
+                                .padding()
+                                .background(.black.opacity(0.75))
+                                .foregroundColor(.white)
+                                .font(.title)
+                                .clipShape(Circle())
+                                .padding(.trailing)
+                                
                         }
-                        .padding()
-                        .background(.black.opacity(0.75))
-                        .foregroundColor(.white)
-                        .font(.title)
-                        .clipShape(Circle())
-                        .padding(.trailing)
+                        
+                        
                     }
                 }
             }
@@ -65,6 +68,7 @@ struct ContentView: View {
                     viewModel.update(location: newLocation)
                 }
             }
+            
         }
         else{
             Button("Unlock Places") {
@@ -74,6 +78,11 @@ struct ContentView: View {
             .background(.blue)
             .foregroundColor(.white)
             .clipShape(Capsule())
+            .alert(viewModel.alertTitle, isPresented: $viewModel.showingAlert) {
+                Button("Dismiss", role: .cancel) { }
+            } message: {
+                Text(viewModel.alertMessage)
+            }
         }
     }
 }
