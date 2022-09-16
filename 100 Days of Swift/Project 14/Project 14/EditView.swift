@@ -10,7 +10,7 @@ import SwiftUI
 struct EditView: View {
     
     
-    @StateObject var viewModel: viewModel
+    @StateObject var editViewModel: viewModel
     @Environment(\.dismiss) var dismiss
     
     
@@ -22,13 +22,13 @@ struct EditView: View {
         NavigationView {
             Form {
                 Section {
-                    TextField("Place name", text: $viewModel.name)
-                    TextField("Description", text: $viewModel.description)
+                    TextField("Place name", text: $editViewModel.name)
+                    TextField("Description", text: $editViewModel.description)
                 }
                 Section("Nearby…") {
-                    switch viewModel.loadingState {
+                    switch editViewModel.loadingState {
                     case .loaded:
-                        ForEach(pages, id: \.pageid) { page in
+                        ForEach(editViewModel.pages, id: \.pageid) { page in
                             Text(page.title)
                                 .font(.headline)
                             + Text(": ") +
@@ -45,10 +45,10 @@ struct EditView: View {
             .navigationTitle("Place details")
             .toolbar {
                 Button("Save") {
-                    var newLocation = location
+                    var newLocation = editViewModel.location
                     newLocation.id = UUID()
-                    newLocation.name = name
-                    newLocation.description = description
+                    newLocation.name = editViewModel.name
+                    newLocation.description = editViewModel.description
                     
                     onSave(newLocation)
                     dismiss()
@@ -60,13 +60,14 @@ struct EditView: View {
         }
     }
     
-    init(location: Location){
-        
+    init(location: Location, onSave: @escaping (Location) -> Void){
+        self.onSave = onSave
+        _editViewModel = StateObject(wrappedValue: viewModel(location: location))
     }
     
     
     func fetchNearbyPlaces() async {
-        let urlString = "https://en.wikipedia.org/w/api.php?ggscoord=\(viewModel.location.coordinate.latitude)%7C\(viewModel.location.coordinate.longitude)&action=query&prop=coordinates%7Cpageimages%7Cpageterms&colimit=50&piprop=thumbnail&pithumbsize=500&pilimit=50&wbptterms=description&generator=geosearch&ggsradius=10000&ggslimit=50&format=json"
+        let urlString = "https://en.wikipedia.org/w/api.php?ggscoord=\(editViewModel.location.coordinate.latitude)%7C\(editViewModel.location.coordinate.longitude)&action=query&prop=coordinates%7Cpageimages%7Cpageterms&colimit=50&piprop=thumbnail&pithumbsize=500&pilimit=50&wbptterms=description&generator=geosearch&ggsradius=10000&ggslimit=50&format=json"
 
         guard let url = URL(string: urlString) else {
             print("Bad URL: \(urlString)")
@@ -80,18 +81,13 @@ struct EditView: View {
             let items = try JSONDecoder().decode(Result.self, from: data)
 
             // success – convert the array values to our pages array
-            pages = items.query.pages.values.sorted()
-            loadingState = .loaded
+            editViewModel.pages = items.query.pages.values.sorted()
+            editViewModel.loadingState = .loaded
         } catch {
             // if we're still here it means the request failed somehow
-            loadingState = .failed
+            editViewModel.loadingState = .failed
         }
     }
 }
 
-struct EditView_Previews: PreviewProvider {
-    static var previews: some View {
-        EditView(location: Location.example) { _ in }
-        
-    }
-}
+

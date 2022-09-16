@@ -14,12 +14,12 @@ extension EditView {
             case loading, loaded, failed
         }
         
-        @Published private var loadingState = LoadingState.loading
-        @Published private var pages = [Page]()
+        @Published var loadingState = LoadingState.loading
+        @Published var pages = [Page]()
         
 
-        @Published private var name: String
-        @Published private var description: String
+        @Published var name: String
+        @Published var description: String
         
         @Published var location: Location
         
