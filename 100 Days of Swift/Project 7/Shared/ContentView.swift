@@ -77,6 +77,9 @@ struct ContentView: View {
                                     Text(item.amount, format: .currency(code: Locale.current.currencyCode ?? "USD"))
                                         .foregroundColor(getAmountColor(for: item))
                                 }
+                                .accessibilityElement()
+                                .accessibilityLabel(item.name)
+                                .accessibilityValue(String(item.amount))
                             }
                             .onDelete(perform: removeBusinessItems)
                         }
