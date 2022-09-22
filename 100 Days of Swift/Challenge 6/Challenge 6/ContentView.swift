@@ -8,9 +8,41 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @State private var images = [UserImage]()
+    @State private var isSheetShowing = false
+    
+
+    
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+        NavigationView{
+            List{
+                ForEach(images) { image in
+                    NavigationLink(image.title){
+                        DetailsView(image: $images.first(where: {$0.id == image.id})!)
+                    }
+                }
+                Button("Add Item") {
+                    images.append(UserImage.exempleImage)
+                }
+            }
+            .toolbar{
+                Button {
+                    
+                } label: {
+                    Image(systemName: "plus")
+                }
+            }
+            .navigationTitle("Images")
+        }
+        .onChange(of: images) { _ in
+            images.sort()
+        }
+        .sheet(isPresented: $isSheetShowing){
+            AddView(imagesList: $images)
+        }
+        
+        
     }
 }
 

@@ -8,13 +8,28 @@
 import SwiftUI
 
 struct AddView: View {
+    
+    @Binding var imagesList: [UserImage]
+    @State private var title = ""
+    @State private var description = ""
+    @State private var image: Image?
+    
+    @Environment(\.dismiss) var dismiss
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        List{
+            TextField("title", text: $title)
+            TextField("Description", text: $description)
+        }
     }
 }
 
 struct AddView_Previews: PreviewProvider {
+    
+    
+    
     static var previews: some View {
-        AddView()
+        
+        AddView(imagesList: .constant([UserImage]()))
     }
 }

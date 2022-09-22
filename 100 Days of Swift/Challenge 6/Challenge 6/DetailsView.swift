@@ -8,13 +8,35 @@
 import SwiftUI
 
 struct DetailsView: View {
+    
+    @Binding var image: UserImage
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack(alignment: .leading){
+            Image(image.imageURL.absoluteString)
+                .resizable()
+                .clipShape(RoundedRectangle(cornerRadius: 15))
+                .padding()
+                .scaledToFit()
+                .shadow(radius: 5)
+                
+            VStack(alignment: .leading){
+                Text(image.title)
+                    .font(.largeTitle)
+                Text(image.description)
+                    
+            }
+            .padding(.leading)
+            Spacer()
+        }
+        .navigationTitle(image.title)
+        .navigationBarTitleDisplayMode(.inline)
     }
+    
 }
 
 struct DetailsView_Previews: PreviewProvider {
     static var previews: some View {
-        DetailsView()
+        DetailsView(image: .constant(UserImage.exempleImage))
     }
 }

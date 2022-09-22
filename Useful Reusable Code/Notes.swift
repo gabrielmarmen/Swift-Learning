@@ -93,56 +93,19 @@ VStack {
 
 ===============================================================================================================================================
 //Tags: Image Picker, PHPickerViewController, UIKit integration in SwiftUI
-//The following code will detail the integration of a UIKit ViewController in our SwiftUI environement
+//See the Swift File named ImagePicker.swift for a wrapped PHPickerViewController
+//See the Swift File name ImageSaver.swift for Saving images to library
 
-//We are here creating a new Swift file with the following code
-
-import PhotosUI
-import SwiftUI
-
-//Here we are using a conformance to UIViewControllerRepresentable. This also conforms to View
-//This conformance lets us use this struct in our SwiftUI code as a normal SwiftUI View
-struct ImagePicker: UIViewControllerRepresentable {
-//This struct binds to a UIImage that will be present in our 
-    @Binding var image: UIImage?
-	
-	//This is the first requirement of our conformance to UIViewControllerRepresentable
-    func makeUIViewController(context: Context) -> PHPickerViewController {
-        var config = PHPickerConfiguration()
-        config.filter = .images
-        let picker = PHPickerViewController(configuration: config)
-        picker.delegate = context.coordinator
-        return picker
-    }
-
-    func updateUIViewController(_ uiViewController: PHPickerViewController, context: Context) {
-
-    }
-
-    func makeCoordinator() -> Coordinator {
-        Coordinator(self)
-    }
-
-    class Coordinator: NSObject, PHPickerViewControllerDelegate {
-        let parent: ImagePicker
-
-        init(_ parent: ImagePicker) {
-            self.parent = parent
-        }
-
-        func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
-            picker.dismiss(animated: true)
-
-            guard let provider = results.first?.itemProvider else { return }
-
-            if provider.canLoadObject(ofClass: UIImage.self) {
-                provider.loadObject(ofClass: UIImage.self) { image, _ in
-                    self.parent.image = image as? UIImage
-                }
-            }
-        }
-    }
+================================================================================================================================================
+//Tags: Local documents directory, repertory, documents URL
+//This lets us get the users local directory. 
+func getDocumentsDirectory() -> URL {
+    // find all possible documents directories for this user
+    let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+    // just send back the first one, which ought to be the only one
+    return paths[0]
 }
+
 
 
 
