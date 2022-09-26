@@ -105,11 +105,44 @@ func getDocumentsDirectory() -> URL {
     // just send back the first one, which ought to be the only one
     return paths[0]
 }
+================================================================================================================================================
+//Tags: Local Notification, Notifications
+//The following code shows how to request notifications permissions using UNUserNotificationCenter. This needs us to import UserNotifications
 
+//Calls the method requestAuthorization of the current UserNotificationCenter. 
+//Options are used to select the right privileges. 
+//This method takes a closure with a success and error parameters. We can use those to verify if the Authorization was successful or not and act accordingly
+UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
+    if success {
+        print("All set!")
+    } else if let error = error {
+        print(error.localizedDescription)
+    }
+}
 
+//This code creates a notification request using some content, an Identifier and a trigger
 
+//We first create an instance of UNMutableNotificationContent() that will contain out content
+let content = UNMutableNotificationContent()
+//Here we set the content's values (Title, Subtitle and Sound
+content.title = "Feed the cat"
+content.subtitle = "It looks hungry"
+content.sound = UNNotificationSound.default
 
+// Now we create our trigger. This exemple uses an instance of UNTimeIntervalNotificationTrigger that takes a time interval (Int) and specifies if it repeats
+let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
 
+//Here we use an Instance of UNNotificationRequest that will be sent to the notificationCenter
+//Its initializer takes 3 parameters as mentionned previously : 
+//1. An Identifier : simple UUID
+//2. The content : an instance of UNMutableNotificationContent that was defined previously
+//3. The trigger : an instance of UNTimeIntervalNotificationTrigger that was also defined previously
+let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+
+// add our notification request
+UNUserNotificationCenter.current().add(request)
+
+================================================================================================================================================
 
 
 

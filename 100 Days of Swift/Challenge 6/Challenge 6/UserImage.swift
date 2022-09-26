@@ -15,7 +15,7 @@ struct UserImage: Comparable, Identifiable {
     var description: String
     var imageURL: URL
     
-    static let exempleImage = UserImage(id: UUID(), title: "Some Image" , description: "This is an image lmao.", imageURL: URL(string: "Exemple")!)
+    static let exempleImage = UserImage(id: UUID(), title: "Some Image" , description: "This is an image lmao.", imageURL: URL(string: "exemple")!)
     
     static func < (lhs: UserImage, rhs: UserImage) -> Bool {
         lhs.title < rhs.title
