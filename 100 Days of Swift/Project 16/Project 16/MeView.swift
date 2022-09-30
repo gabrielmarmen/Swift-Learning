@@ -19,21 +19,28 @@ struct MeView: View {
     
     var body: some View {
         NavigationView {
-            Form {
-                TextField("Name", text: $name)
-                    .textContentType(.name)
-                    .font(.title)
-
-                TextField("Email address", text: $emailAddress)
-                    .textContentType(.emailAddress)
-                    .font(.title)
-                
+            VStack{
                 Image(uiImage: generateQRCode(from: "\(name)\n\(emailAddress)"))
                     .resizable()
                     .interpolation(.none)
+                    .clipShape(RoundedRectangle(cornerRadius: 10))
                     .scaledToFit()
                     .frame(width: 200, height: 200)
+                    .shadow(radius: 3)
+                    .padding()
+                
+                Form {
+                    TextField("Name", text: $name)
+                        .textContentType(.name)
+                        .font(.title)
+
+                    TextField("Email address", text: $emailAddress)
+                        .textContentType(.emailAddress)
+                        .font(.title)
+                    
+                }
             }
+            
             .navigationTitle("Your code")
         }
     }

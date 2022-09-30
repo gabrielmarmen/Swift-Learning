@@ -143,7 +143,31 @@ let request = UNNotificationRequest(identifier: UUID().uuidString, content: cont
 UNUserNotificationCenter.current().add(request)
 
 ================================================================================================================================================
+//Tags: Saving Data, Loading Data, UserDefaults, ForKey
 
+//This is a custom init that loads data if existing or create a new array if this data doesnt exist in UserDefaults
+init() {
+    //We first test if our data can be loaded from the userDefaults with the key "SavedData" (Our future save function will save our array under that key)
+    if let data = UserDefaults.standard.data(forKey: "SavedData") {
+        //We then try to decode from that data to this type : [Prospect].self
+        if let decoded = try? JSONDecoder().decode([Prospect].self, from: data) {
+            //If it is successfuly decoded, it puts our array into the "people" property
+            people = decoded
+            return
+        }
+    }
+    //If all fails, we return an empty array (This is how it will act on a first boot of the app because there is no data
+    people = []
+}
+
+//This is a custom Save function that we will run everytime something is modified in our array.
+func save() {
+    //We first try to encode our array
+    if let encoded = try? JSONEncoder().encode(people) {
+        //If encoding works, we save to our UserDefaults using the Key SavedData
+        UserDefaults.standard.set(encoded, forKey: "SavedData")
+    }
+}
 
 
 
