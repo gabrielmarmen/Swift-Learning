@@ -92,7 +92,7 @@ VStack {
 }
 
 ===============================================================================================================================================
-//Tags: Image Picker, PHPickerViewController, UIKit integration in SwiftUI
+//Tags: Image Picker, PHPickerViewController, UIKit integration in SwiftUI, Image Saver, Save Image
 //See the Swift File named ImagePicker.swift for a wrapped PHPickerViewController
 //See the Swift File name ImageSaver.swift for Saving images to library
 

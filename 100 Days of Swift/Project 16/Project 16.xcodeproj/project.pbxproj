@@ -15,6 +15,7 @@
 		603641CE28E30B2300B6D7C7 /* MeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603641CD28E30B2300B6D7C7 /* MeView.swift */; };
 		603641D028E3571B00B6D7C7 /* Prospect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603641CF28E3571B00B6D7C7 /* Prospect.swift */; };
 		603641D328E6B74B00B6D7C7 /* CodeScanner in Frameworks */ = {isa = PBXBuildFile; productRef = 603641D228E6B74B00B6D7C7 /* CodeScanner */; };
+		603641D528E8876B00B6D7C7 /* ImageSaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603641D428E8876B00B6D7C7 /* ImageSaver.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,8 @@
 		603641CB28E30B1800B6D7C7 /* ProspectsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProspectsView.swift; sourceTree = "<group>"; };
 		603641CD28E30B2300B6D7C7 /* MeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeView.swift; sourceTree = "<group>"; };
 		603641CF28E3571B00B6D7C7 /* Prospect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prospect.swift; sourceTree = "<group>"; };
+		603641D428E8876B00B6D7C7 /* ImageSaver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImageSaver.swift; path = "../../../Useful Reusable Code/Swift Files/ImageSaver.swift"; sourceTree = "<group>"; };
+		603641D628E8893900B6D7C7 /* Project-16-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Project-16-Info.plist"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,11 +62,13 @@
 		603641BC28E30AC100B6D7C7 /* Project 16 */ = {
 			isa = PBXGroup;
 			children = (
+				603641D628E8893900B6D7C7 /* Project-16-Info.plist */,
 				603641BD28E30AC100B6D7C7 /* Project_16App.swift */,
 				603641BF28E30AC100B6D7C7 /* ContentView.swift */,
 				603641CB28E30B1800B6D7C7 /* ProspectsView.swift */,
 				603641CF28E3571B00B6D7C7 /* Prospect.swift */,
 				603641CD28E30B2300B6D7C7 /* MeView.swift */,
+				603641D428E8876B00B6D7C7 /* ImageSaver.swift */,
 				603641C128E30AC200B6D7C7 /* Assets.xcassets */,
 				603641C328E30AC200B6D7C7 /* Preview Content */,
 			);
@@ -155,6 +160,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				603641CE28E30B2300B6D7C7 /* MeView.swift in Sources */,
+				603641D528E8876B00B6D7C7 /* ImageSaver.swift in Sources */,
 				603641D028E3571B00B6D7C7 /* Prospect.swift in Sources */,
 				603641CC28E30B1800B6D7C7 /* ProspectsView.swift in Sources */,
 				603641C028E30AC100B6D7C7 /* ContentView.swift in Sources */,
@@ -290,7 +296,9 @@
 				DEVELOPMENT_TEAM = 4SAN7KM5F6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Project-16-Info.plist";
 				INFOPLIST_KEY_NSCameraUsageDescription = "We need access to your camera to scan QR Codes.";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "We need to save your code to your Library";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -320,7 +328,9 @@
 				DEVELOPMENT_TEAM = 4SAN7KM5F6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Project-16-Info.plist";
 				INFOPLIST_KEY_NSCameraUsageDescription = "We need access to your camera to scan QR Codes.";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "We need to save your code to your Library";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
