@@ -12,22 +12,45 @@ struct ProspectsView: View {
     
     @EnvironmentObject var prospects: Prospects
     @State private var isShowingScanner = false
+    @State private var isShowingSorting = false
+    @State private var sorting = SortingType.name
     
     enum FilterType {
         case none, contacted, uncontacted
     }
     
+    enum SortingType {
+        case name, email
+    }
+    
     let filter: FilterType
+    
+    
+    
     
     var body: some View {
         NavigationView {
             List {
                 ForEach(filteredProspects) { prospect in
-                    VStack(alignment: .leading) {
-                        Text(prospect.name)
-                            .font(.headline)
-                        Text(prospect.emailAddress)
-                            .foregroundColor(.secondary)
+                    HStack{
+                        VStack(alignment: .leading) {
+                            Text(prospect.name)
+                                .font(.headline)
+                            Text(prospect.emailAddress)
+                                .foregroundColor(.secondary)
+                        }
+                        Spacer()
+                        if filter == .none {
+                            if prospect.isContacted {
+                                Image(systemName: "person.crop.circle.fill.badge.checkmark")
+                                    .foregroundColor(Color.green)
+                            }
+                            else {
+                                Image(systemName: "person.crop.circle.badge.xmark")
+                                    .foregroundColor(Color.red)
+                            }
+                        }
+                        
                     }
                     .swipeActions {
                         if prospect.isContacted {
@@ -57,15 +80,32 @@ struct ProspectsView: View {
             }
             .navigationTitle(title)
             .toolbar {
-                Button {
-                    isShowingScanner = true
-                } label: {
-                    Label("Scan", systemImage: "qrcode.viewfinder")
+                ToolbarItemGroup(placement: .navigationBarTrailing){
+                    Button("Sort") {
+                        isShowingSorting = true
+                    }
+                }
+                ToolbarItemGroup(placement: .navigationBarLeading){
+                    Button {
+                        isShowingScanner = true
+                    } label: {
+                        Label("Scan", systemImage: "qrcode.viewfinder")
+                    }
                 }
             }
         }
         .sheet(isPresented: $isShowingScanner) {
             CodeScannerView(codeTypes: [.qr], simulatedData: "Paul Hudson\npaul@hackingwithswift.com", completion: handleScan)
+            
+            
+        }
+        .confirmationDialog("Sort by", isPresented: $isShowingSorting) {
+            Button("Name"){
+                sorting = .name
+            }
+            Button("Email"){
+                sorting = .email
+            }
         }
     }
     
@@ -83,11 +123,11 @@ struct ProspectsView: View {
     var filteredProspects: [Prospect] {
         switch filter {
         case .none:
-            return prospects.people
+            return sort(prospects.people)
         case .contacted:
-            return prospects.people.filter { $0.isContacted }
+            return sort(prospects.people.filter { $0.isContacted })
         case .uncontacted:
-            return prospects.people.filter { !$0.isContacted }
+            return sort(prospects.people.filter { !$0.isContacted })
         }
     }
     
@@ -103,10 +143,23 @@ struct ProspectsView: View {
             person.name = details[0]
             person.emailAddress = details[1]
 
-            prospects.add(person)
+            let person2 = Prospect()
+            person2.name = "Gabriel Marmen"
+            person2.emailAddress = "zabton@outlook.com"
+            prospects.add(person2)
             
         case .failure(let error):
             print("Scanning failed: \(error.localizedDescription)")
+        }
+    }
+    
+    func sort(_ people: [Prospect]) -> [Prospect] {
+        
+        switch sorting{
+        case .name:
+            return people.sorted(by: {$0.name < $1.name})
+        case .email:
+            return people.sorted(by: {$0.emailAddress < $1.emailAddress})
         }
     }
     

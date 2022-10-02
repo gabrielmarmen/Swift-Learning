@@ -143,7 +143,7 @@ let request = UNNotificationRequest(identifier: UUID().uuidString, content: cont
 UNUserNotificationCenter.current().add(request)
 
 ================================================================================================================================================
-//Tags: Saving Data, Loading Data, UserDefaults, ForKey
+//Tags: Saving Data, Loading Data, UserDefaults, ForKey, Json 
 
 //This is a custom init that loads data if existing or create a new array if this data doesnt exist in UserDefaults
 init() {
