@@ -19,7 +19,10 @@ extension View {
 
 struct ContentView: View {
     
-    @State private var cards = [Card](repeating: Card.example, count: 10)
+    @State private var cards = [Card]()
+    @State private var showingEditScreen = false
+    
+    
     @Environment(\.accessibilityDifferentiateWithoutColor) var differentiateWithoutColor
     @Environment(\.accessibilityVoiceOverEnabled) var voiceOverEnabled
     
@@ -65,6 +68,26 @@ struct ContentView: View {
                         .clipShape(Capsule())
                 }
             }
+            VStack {
+                HStack {
+                    Spacer()
+
+                    Button {
+                        showingEditScreen = true
+                    } label: {
+                        Image(systemName: "plus.circle")
+                            .padding()
+                            .background(.black.opacity(0.7))
+                            .clipShape(Circle())
+                    }
+                }
+
+                Spacer()
+            }
+            .foregroundColor(.white)
+            .font(.largeTitle)
+            .padding()
+            
             if differentiateWithoutColor || voiceOverEnabled {
                 VStack {
                     Spacer()
@@ -105,6 +128,8 @@ struct ContentView: View {
             }
             
         }
+        .sheet(isPresented: $showingEditScreen, onDismiss: resetCards, content: EditCards.init)
+        .onAppear(perform: resetCards)
         .onReceive(timer) { time in
             guard isActive else { return }
 
@@ -132,9 +157,16 @@ struct ContentView: View {
     }
     
     func resetCards() {
-        cards = [Card](repeating: Card.example, count: 10)
         timeRemaining = 100
         isActive = true
+        loadData()
+    }
+    func loadData() {
+        if let data = UserDefaults.standard.data(forKey: "Cards") {
+            if let decoded = try? JSONDecoder().decode([Card].self, from: data) {
+                cards = decoded
+            }
+        }
     }
     
 
